@@ -33,7 +33,6 @@ def dicsCitiesStates(city) :
     return False
 
 def parseLine(line) :
-    i = str
     lst = str(line).split(',')
     for i in range (len(lst)) :
         lst[i] = lst[i].strip()

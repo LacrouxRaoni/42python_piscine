@@ -23,24 +23,25 @@ def createList() :
         ]
     return d
 
-def createDictionary(dic) :
-    flipped = {}
-    for key, var in dic.items() :
-        if(var not in flipped) :
-           flipped[var] = [key]
+def createDictionary(d) :
+    dic = {}
+    for key, var in d :
+        if(var not in dic) :
+           dic[var] = [key]
         else:
-            flipped[var].append(key)
-    return flipped
+            dic[var].append(key)
+    return dic
 
-def printDictionary(flipped) :
-    for i, j in flipped.items() :
+def printDictionary(dic) :
+    for i, j in dic.items() :
         print(str(i) + " : " + str(j).replace("[", "").replace("]", "").replace("\'", "").replace(",", ""))    
 
-def dictionary() :
-    dic = dict(createList())
-    printDictionary(createDictionary(dic))
 
-        
+def dictionary() :
+    d = createList()
+    dic = createDictionary(d)
+    printDictionary(dic)
+
 
 if __name__ == '__main__' : 
     dictionary()
