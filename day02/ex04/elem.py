@@ -12,14 +12,23 @@ class Text(str):
         """
         Do you really need a comment to understand this method?..
         """
-        return super().__str__().replace('\n', '\n<br />\n')
+        return super().__str__().replace('<', '&lt;').replace('>', '&gt;').replace('\n', '\n<br />\n').replace('"', '&quot;')
 
 
 class Elem:
     """
     Elem will permit us to represent our HTML elements.
     """
-    [...]
+    class ValidationError(Exception) :
+        def __init__(self) :
+            super().__init__("Validation Error")
+
+    tag = ''
+    attr = {}
+    tag_type = ''
+    content = [] 
+
+    
 
     def __init__(self, tag='div', attr={}, content=None, tag_type='double'):
         """
@@ -27,8 +36,20 @@ class Elem:
 
         Obviously.
         """
-        [...]
 
+        self.tag = tag
+        self.attr = attr
+        self.tag_type = tag_type
+
+        if self.check_type(content) == False and content != None :
+            raise Elem.ValidationError
+        if content == None :
+            self.content = []
+        elif type(content) != list:
+            self.content = [content]
+        else :
+            self.content = content
+            
     def __str__(self):
         """
         The __str__() method will permit us to make a plain HTML representation
@@ -37,9 +58,9 @@ class Elem:
         elements...).
         """
         if self.tag_type == 'double':
-            [...]
+            result = f'<{self.tag}{self.__make_attr()}>{self.__make_content()}</{self.tag}>'
         elif self.tag_type == 'simple':
-            [...]
+            result = f'<{self.tag}{self.__make_attr()}/>'
         return result
 
     def __make_attr(self):
@@ -55,12 +76,15 @@ class Elem:
         """
         Here is a method to render the content, including embedded elements.
         """
-
         if len(self.content) == 0:
             return ''
         result = '\n'
         for elem in self.content:
-            result += [...]
+            if len(str(elem)) != 0:
+               result += str(elem) + '\n'
+        result = result.replace('\n', '\n  ', result.count('\n') - 1)
+        if len(result.strip('\n')) == 0:
+            return ''
         return result
 
     def add_content(self, content):
@@ -84,4 +108,21 @@ class Elem:
 
 
 if __name__ == '__main__':
-    [...]
+
+
+    html = Elem('html')
+    head = Elem('head')
+    title = Elem('title', content=Text("'Hello ground!'"))
+    body = Elem('body')
+    h1 = Elem('h1', content=Text("'Oh no, not again!"))
+    img = Elem('img', attr={"src":"http://i.imgur.com/pfp3T.jpg"}, tag_type='simple')
+    
+    try:
+        head.add_content(title)
+        html.add_content(head)
+        body.add_content(h1)
+        body.add_content(img)
+        html.add_content(body)
+        print(html)
+    except Exception as e:
+        print(e.args[0])

@@ -49,7 +49,7 @@ def test_empty_texts():
     
 def test_errors():
     # Type error if the content isn't made of Text or Elem.
-    try:
+    try:#mexi aqui
         Elem(content=1)
     except Exception as e:
         assert type(e) == Elem.ValidationError
@@ -67,7 +67,7 @@ def test_errors():
 
     # Same with add_method()
     try:
-        elem = Elem()
+        elem = Elem()#mexi aqui
         elem.add_content(1)
         raise(Exception("incorrect behaviour."))
     except Exception as e:
