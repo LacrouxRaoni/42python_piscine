@@ -8,12 +8,12 @@ class Intern :
     def work(self) :
         raise Exception ("I’m just an intern, I can’t do that...")
 
-    class Coffe :
+    class Coffee :
         def __str__(self) :
             return "This is the worst coffee you ever tasted."
     
     def make_coffe(self) :
-        return self.Coffe()
+        return self.Coffee()
 
 
 if __name__ == '__main__' :

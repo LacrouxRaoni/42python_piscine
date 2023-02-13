@@ -82,7 +82,7 @@ class Elem:
         for elem in self.content:
             if len(str(elem)) != 0:
                result += str(elem) + '\n'
-        result = result.replace('\n', '\n  ', result.count('\n') - 1)
+        result = result.replace('\n', '\n  ', result.count('\n') - 1).replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '"')
         if len(result.strip('\n')) == 0:
             return ''
         return result
@@ -112,9 +112,9 @@ if __name__ == '__main__':
 
     html = Elem('html')
     head = Elem('head')
-    title = Elem('title', content=Text("'Hello ground!'"))
+    title = Elem('title', content=Text('"Hello ground!"'))
     body = Elem('body')
-    h1 = Elem('h1', content=Text("'Oh no, not again!"))
+    h1 = Elem('h1', content=Text('"Oh no, not again!"'))
     img = Elem('img', attr={"src":"http://i.imgur.com/pfp3T.jpg"}, tag_type='simple')
     
     try:
